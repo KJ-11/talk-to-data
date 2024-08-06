@@ -1,0 +1,67 @@
+/* styles/globals.css */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45vh;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .container {
+    width: 100%; /* Set the width to 80% of the viewport */
+    max-width: 1400px; /* Set a maximum width for the container */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .file-upload {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .file-upload .input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 30%; /* Ensure input group takes the full width */
+  }
+  
+  .file-upload input[type="file"] {
+    margin-right: 10px;
+    flex-grow: 1; /* Allow input to take available space */
+  }
+  
+  .file-upload button {
+    padding: 10px 20px;
+    background-color: #0070f3;
+    color: #fff;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .file-upload button:hover {
+    background-color: #005bb5;
+  }
+  
+  .file-upload button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
