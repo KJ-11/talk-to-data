@@ -25,13 +25,28 @@ def chat_interface(df):
         # If it's a valid SQL query, execute it
         if is_sql:
             sql_query = extract_sql_query(response)  # Extract SQL part only
-            result = execute_sql_query(sql_query)
-            st.write(result)
+            if sql_query is None:
+                st.warning("The reply looked like SQL but no complete SELECT statement was found in it.")
+            else:
+                result = execute_sql_query(sql_query)
+                st.write(result)
         else:
             st.write(response)
 
 # Step 1: Generate a response, deciding if it's a SQL query or broad question
 def generate_response_or_query(user_input, df):
+    """Ask GPT-4 the user's question and decide whether the reply is SQL or prose.
+
+    The model is given one prompt and chooses its own strategy: answer directly,
+    or return a SQL query against the 'uploaded_data' table. There is no separate
+    classifier. The routing decision is made here by inspecting the model's reply:
+    it is treated as SQL if the text starts with 'select' or contains 'from'
+    anywhere. Note that this substring check is deliberately loose and can route
+    ordinary prose containing the word "from" down the SQL path.
+
+    Returns a (response_text, is_sql) tuple. On an API error, returns the error
+    message with is_sql set to False so the caller shows it as text.
+    """
     openai.api_key = openai_api_key
     
     # Get column names from the DataFrame

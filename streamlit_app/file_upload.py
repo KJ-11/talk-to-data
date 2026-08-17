@@ -18,6 +18,14 @@ def upload_file():
                 df = pd.read_excel(uploaded_file)
             elif uploaded_file.name.endswith('.txt') or uploaded_file.name.endswith('.tsv'):
                 df = pd.read_csv(uploaded_file, delimiter='\t')
+            else:
+                st.error(f"Unsupported file type: {uploaded_file.name}")
+                return None
+
+            # An empty file parses fine but produces no table worth querying
+            if df.empty or len(df.columns) == 0:
+                st.error("That file has no rows or no columns. Upload a file with data in it.")
+                return None
 
             # Save the DataFrame to SQLite database
             save_to_db(df)
